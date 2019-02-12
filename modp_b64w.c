@@ -25,7 +25,7 @@
 #define BADCHAR 0x01FFFFFF
 
 
-size_t modp_b64w_encode(char* dest, const char* str, size_t len)
+size_t modp_b64w_encode(char* dest, unsigned char* str, size_t len)
 {
     size_t i = 0;
     const uint8_t* s = (const uint8_t*)str;
