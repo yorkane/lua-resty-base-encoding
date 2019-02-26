@@ -159,9 +159,10 @@ unsigned long djb2_hash(const char *str)
 }
 
 
-size_t xxhash64_byte(unsigned char *bytes, const char *str, size_t length, unsigned long long const seed)
+size_t xxhash64_b64(char *dest, const char *str, size_t length, unsigned long long const seed)
 {
     unsigned long long lhash = xxhash64(str, length, seed);
+    unsigned char bytes[8];
     bytes[0] = (lhash >> 56) & 0xFF;
     bytes[1] = (lhash >> 48) & 0xFF;
     bytes[2] = (lhash >> 40) & 0xFF;
@@ -170,16 +171,8 @@ size_t xxhash64_byte(unsigned char *bytes, const char *str, size_t length, unsig
     bytes[5] = (lhash >> 16) & 0xFF;
     bytes[6] = (lhash >> 8) & 0xFF;
     bytes[7] = lhash & 0xFF;
-    return 8;
-}
-
-size_t xxhash64_b64(char *dest, unsigned char *bytes, const char *str, size_t length, unsigned long long const seed)
-{
-    xxhash64_byte(bytes, str, length, seed);
     return modp_b64w_encode(dest, bytes, 8);
 }
-
-
 
 size_t xxhash32_b64(char *dest, const char *str, size_t length, unsigned int const seed)
 {
